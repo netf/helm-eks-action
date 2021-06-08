@@ -1,4 +1,4 @@
-name: "Helm deployer action on EKS"
+name: "Helm the deployer on EKS"
 description: "Authenticates on EKS clusters and executes Helm commands. Can also be used with kubectl commands."
 branding:
   icon: 'anchor'  
