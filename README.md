@@ -31,13 +31,12 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
+          aws-region: eu-west-2
 
       - name: helm deploy
-        uses: koslib/helm-eks-action@master
-        env:
-          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        uses: netf/helm-eks-action@v1
         with:
+          cluster-name: test-cluster
           command: helm upgrade <release name> --install --wait <chart> -f <path to values.yaml>
 ```
 
@@ -49,10 +48,9 @@ Use the output of your command in later steps
     steps:
       - name: Get URL
         id: url
-        uses: koslib/helm-eks-action@master
-        env:
-          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        uses: netf/helm-eks-action@v1
         with:
+          cluster-name: test-cluster
           command: kubectl get svc my_svc -o json | jq -r '.status.loadBalancer.ingress[0].hostname'
 
       - name: Print Response
@@ -63,13 +61,6 @@ Use the output of your command in later steps
 # Secrets
 
 Create a GitHub Secret for each of the following values:
-
-* `KUBE_CONFIG_DATA`
-Your kube config file in base64-encrypted form. You can do that with
-
-```
-cat $HOME/.kube/config | base64
-```
 
 * `AWS_ACCESS_KEY_ID`
 
