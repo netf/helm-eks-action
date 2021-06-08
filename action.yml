@@ -4,6 +4,13 @@ branding:
   icon: 'anchor'  
   color: 'blue'
 inputs:
+  aws-region:
+    description: 'AWS region to use (default: eu-west-2)'
+    required: true
+    default: eu-west-2
+  cluster-name:
+    description: 'EKS cluster name.'
+    required: true
   command:
     description: "Your command (kubectl or helm)"
     required: true
@@ -13,5 +20,8 @@ outputs:
 runs:
   using: "docker"
   image: "Dockerfile"
+  env:
+    AWS_REGION: ${{ inputs.aws-region }}
+    CLUSTER_NAME: ${{ inputs.cluster-name }}
   args:
     - ${{ inputs.command }}

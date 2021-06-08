@@ -3,10 +3,9 @@
 set -e
 
 aws eks update-kubeconfig \
-  --region eu-west-2 \
-  --name nep-data-dev-main --kubeconfig kubeconfig
+  --region ${AWS_REGION} \
+  --name ${CLUSTER_NAME} --kubeconfig kubeconfig
 
-#echo ${KUBE_CONFIG_DATA} | base64 -d > kubeconfig
 export KUBECONFIG="${PWD}/kubeconfig"
 
 echo "running entrypoint command(s)"
